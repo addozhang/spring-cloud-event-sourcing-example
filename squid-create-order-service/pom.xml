@@ -94,10 +94,17 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
         </dependency>
+      
         <dependency>
             <groupId>com.dataman.squid</groupId>
             <artifactId>squid-core</artifactId>
-            <version>1.2.0-RC6</version>
+            <version>master-SNAPSHOT</version>
+        </dependency>
+       
+        <dependency>
+            <groupId>jca</groupId>
+            <artifactId>jca</artifactId>
+            <version>1.5</version>
         </dependency>
     </dependencies>
     <build>

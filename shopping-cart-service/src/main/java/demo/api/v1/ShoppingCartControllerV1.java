@@ -1,6 +1,7 @@
 package demo.api.v1;
 
 import demo.cart.CartEvent;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ import java.util.Optional;
 public class ShoppingCartControllerV1 {
 
     private ShoppingCartServiceV1 shoppingCartService;
-
+   
     @Autowired
     public ShoppingCartControllerV1(ShoppingCartServiceV1 shoppingCartService) {
         this.shoppingCartService = shoppingCartService;
@@ -32,8 +33,9 @@ public class ShoppingCartControllerV1 {
     @RequestMapping(path = "/checkout", method = RequestMethod.POST)
     public ResponseEntity checkoutCart() throws Exception {
         return Optional.ofNullable(shoppingCartService.checkout())
-                .map(checkoutResult -> new ResponseEntity<>(checkoutResult, HttpStatus.OK))
-                .orElseThrow(() -> new Exception("Could not checkout"));
+        		.map(checkoutResult -> new ResponseEntity<>(checkoutResult, HttpStatus.OK))
+        		.orElseThrow(() -> new Exception("Could not checkout"));
+      
     }
 
     @RequestMapping(path = "/cart", method = RequestMethod.GET)

@@ -1,3 +1,8 @@
+zookeeper:
+  image: zookeeper
+  ports:
+   - 2181:2181
+  log_driver: "journald"
 config-service:
   image: kbastani/config-service
   environment:
@@ -5,6 +10,7 @@ config-service:
    - DOCKER_IP=$DOCKER_IP
   ports:
    - 8888:8888
+  log_driver: "journald"
 hystrix-dashboard:
   image: kbastani/hystrix-dashboard
   environment:
@@ -12,27 +18,32 @@ hystrix-dashboard:
    - DOCKER_IP=$DOCKER_IP
   ports:
    - 6161:6161
+  log_driver: "journald"
 mysql:
   image: mysql:5.7
   ports:
    - 3306:3306
   environment:
-   - MYSQL_ROOT_PASSWORD=dbpass
+   - MYSQL_ROOT_PASSWORD=jRa4DatfNM7g2
    - MYSQL_DATABASE=dev
+  log_driver: "journald"
 neo4j:
   image: neo4j:2.3
   ports:
    - 7474:7474
   environment:
    - NEO4J_AUTH=none
+  log_driver: "journald"
 mongo:
   image: mongo:3.3
   ports:
    - 27017:27017
+  log_driver: "journald"
 redis:
   image: redis:3.0
   ports:
    - 6379:6379
+  log_driver: "journald"
 user-service:
   image: kbastani/user-service
   ports:
@@ -44,8 +55,10 @@ user-service:
   environment:
    - SPRING_PROFILES_ACTIVE=docker
    - DOCKER_IP=$DOCKER_IP
+  log_driver: "journald"
 discovery-service:
   image: kbastani/discovery-service
+  log_driver: "journald"
   ports:
    - 8761:8761
   environment:
@@ -53,6 +66,7 @@ discovery-service:
    - DOCKER_IP=$DOCKER_IP
 edge-service:
   image: kbastani/edge-service
+  log_driver: "journald"
   ports:
    - 9999:9999
   links:
@@ -64,6 +78,7 @@ edge-service:
    - DOCKER_IP=$DOCKER_IP
 account-service:
   image: kbastani/account-service
+  log_driver: "journald"
   links:
    - user-service
    - discovery-service
@@ -74,6 +89,7 @@ account-service:
    - DOCKER_IP=$DOCKER_IP
 inventory-service:
   image: kbastani/inventory-service
+  log_driver: "journald"
   links:
    - neo4j
    - discovery-service
@@ -83,6 +99,9 @@ inventory-service:
    - DOCKER_IP=$DOCKER_IP
 order-service:
   image: kbastani/order-service
+  log_driver: "journald"
+  ports:
+   - 8883:8883
   links:
    - mongo
    - discovery-service
@@ -93,6 +112,7 @@ order-service:
    - DOCKER_IP=$DOCKER_IP
 catalog-service:
   image: kbastani/catalog-service
+  log_driver: "journald"
   links:
    - redis
    - mysql
@@ -103,6 +123,7 @@ catalog-service:
    - DOCKER_IP=$DOCKER_IP
 shopping-cart-service:
   image: kbastani/shopping-cart-service
+  log_driver: "journald"
   links:
    - mysql
    - discovery-service
@@ -111,10 +132,11 @@ shopping-cart-service:
   environment:
    - SPRING_PROFILES_ACTIVE=docker
    - DOCKER_IP=$DOCKER_IP
-   - SQUID_ZK_ADDRESS="zookeeper:2181"
-   - SQUID_SERVICE_NAMESPACE="squid.dataman.com"
+   - SQUID_ZK_ADDRESS=192.168.1.95:2181
+   - SQUID_SERVICE_NAMESPACE=squid.dataman.com
 online-store-web:
   image: kbastani/online-store-web
+  log_driver: "journald"
   ports:
    - 8787:8787
   links:

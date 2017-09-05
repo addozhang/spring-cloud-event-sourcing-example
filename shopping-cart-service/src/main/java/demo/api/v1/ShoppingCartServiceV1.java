@@ -61,6 +61,7 @@ public class ShoppingCartServiceV1 {
             .responseTimeout(5000)
             .build();
 
+    public ShoppingCartServiceV1(){}
     @Autowired
     public ShoppingCartServiceV1(CartEventRepository cartEventRepository,
             @LoadBalanced OAuth2RestTemplate oAuth2RestTemplate,

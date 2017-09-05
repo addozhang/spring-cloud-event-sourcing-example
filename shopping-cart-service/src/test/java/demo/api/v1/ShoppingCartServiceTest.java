@@ -51,4 +51,5 @@ public class ShoppingCartServiceTest {
         Assert.notNull(shoppingCart);
         Assert.notEmpty(shoppingCart.getLineItems());
     }
+  
 }
