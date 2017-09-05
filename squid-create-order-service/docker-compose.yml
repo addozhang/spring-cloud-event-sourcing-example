@@ -8,4 +8,4 @@ service:
       url: "http://order-service-url"
       squid.stdout: "true"
       SQUID_ZK_CONNECTION: "zookeeper:2181"
-      command: ["/bin/sh", "/squid-executor/bin/squid-executor.sh", "start", "-n", "squid.dataman.com", "-r" ,"foreground", "-env", "docker", "-d", "/squid-executor/apps/app"]
+      command: ["/bin/sh", "/squid-executor/bin/squid-executor.sh", "start", "-n", "squid.dataman.com", "-r" ,"foreground", "-env", "docker", "-d", "/squid-executor/apps"]
