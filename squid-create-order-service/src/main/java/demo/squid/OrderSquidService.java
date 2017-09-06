@@ -1,10 +1,12 @@
 package demo.squid;
 
 import com.dataman.squid.core.SquidService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
 
+import java.io.IOException;
 import java.util.stream.Collectors;
 
 import demo.order.CreateOrderRequest;
@@ -55,5 +57,17 @@ public class OrderSquidService implements SquidService<CreateOrderRequest, Order
     @Override
     public String getVersion() {
         return "V1";
+    }
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+        OrderSquidService orderSquidService = new OrderSquidService();
+        String str = "{\"lineItems\":[{\"productId\":\"SKU-24642\",\"product\":{\"id\":0,\"name\":\"Best. Cloud. Ever. (T-Shirt, Men's Large)\",\"productId\":\"SKU-24642\",\"description\":\"<p>Do you love y\n" +
+                "our cloud platform? Do you push code continuously into production on a daily basis? Are you living the cloud native microservice dream? Then rain or shine, this T-Shirt is for\n" +
+                "you. Show the world you're a stylish cloud platform architect with this cute yet casual tee. <br /><br />&nbsp; <strong>Cloud Native Tee Collection</strong><br />&nbsp; 110% cl\n" +
+                "oud stuff, 5% spandex<br />&nbsp; Rain wash only<br />&nbsp; Four nines of " +
+                "<em>stylability</em></p>\",\"unitPrice\":21.99},\"quantity\":1}]}";
+        CreateOrderRequest createOrderRequest = new ObjectMapper().readValue(str, CreateOrderRequest.class);
+        Order order = orderSquidService.execute(createOrderRequest, 0L, 0L);
+        System.out.println(order);
     }
 }
