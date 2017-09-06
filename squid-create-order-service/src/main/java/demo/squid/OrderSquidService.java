@@ -7,8 +7,8 @@ import org.springframework.security.oauth2.client.token.grant.password.ResourceO
 
 import java.util.stream.Collectors;
 
-import demo.order.Order;
 import demo.order.CreateOrderRequest;
+import demo.order.Order;
 
 /**
  * @author addozhang 2017/9/4
@@ -20,14 +20,17 @@ public class OrderSquidService implements SquidService<CreateOrderRequest, Order
     public static final String NAME_URL = "url";
     public static final String NAME_USERNAME = "username";
     public static final String NAME_PASSWORD = "password";
+    public static final String NAME_TOKEN_URI = "token_uri";
     public static final String URL = System.getProperty(NAME_URL, System.getenv(NAME_URL));
     public static final String USERNAME = System.getProperty(NAME_USERNAME, System.getenv(NAME_USERNAME));
     public static final String PASSWORD = System.getProperty(NAME_PASSWORD, System.getenv(NAME_PASSWORD));
+    public static final String TOKEN_URI = System.getProperty(NAME_TOKEN_URI, System.getenv(NAME_TOKEN_URI));
 
     public OrderSquidService() {
         ResourceOwnerPasswordResourceDetails resource = new ResourceOwnerPasswordResourceDetails();
         resource.setUsername(USERNAME);
         resource.setPassword(PASSWORD);
+        resource.setAccessTokenUri(TOKEN_URI);
         oAuth2RestTemplate = new OAuth2RestTemplate(resource);
     }
 
