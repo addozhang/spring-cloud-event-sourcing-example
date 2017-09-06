@@ -7,6 +7,9 @@ public class LineItem {
     private Product product;
     private Integer quantity;
 
+    public LineItem() {
+    }
+
     public LineItem(String productId, Product product, Integer quantity) {
         this.productId = productId;
         this.product = product;
