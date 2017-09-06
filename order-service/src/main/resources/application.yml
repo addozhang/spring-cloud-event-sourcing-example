@@ -10,13 +10,13 @@ spring:
     date-format: "YYYY-MM-dd"
     serialization:
       write_dates_as_timestamps: true
-#security:
-#  oauth2:
-#    resource:
-#      userInfoUri: http://192.168.1.55:8181/uaa/user
-#    client:
-#      client-id: acme
-#  ignored: /api/**
+security:
+  oauth2:
+    resource:
+      userInfoUri: http://192.168.1.55:8181/uaa/user
+    client:
+      client-id: acme
+  ignored: /api/**
 eureka:
   instance:
     prefer-ip-address: true
@@ -38,12 +38,12 @@ spring:
     date-format: "YYYY-MM-dd"
     serialization:
       write_dates_as_timestamps: true
-#security:
-#  oauth2:
-#    resource:
-#      userInfoUri: http://${DOCKER_IP:192.168.1.55}:8181/uaa/user
-#    client:
-#      client-id: acme
+security:
+  oauth2:
+    resource:
+      userInfoUri: http://${DOCKER_IP:192.168.1.55}:8181/uaa/user
+    client:
+      client-id: acme
 eureka:
   instance:
     prefer-ip-address: true
