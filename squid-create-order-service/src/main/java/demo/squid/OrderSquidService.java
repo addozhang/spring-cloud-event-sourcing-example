@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.stream.Collectors;
@@ -23,13 +24,19 @@ public class OrderSquidService implements SquidService<CreateOrderRequest, Order
     public static final String NAME_USERNAME = "username";
     public static final String NAME_PASSWORD = "password";
     public static final String NAME_TOKEN_URI = "token_uri";
+    public static final String NAME_CLIENT_ID = "client_id";
     public static final String URL = System.getProperty(NAME_URL, System.getenv(NAME_URL));
     public static final String USERNAME = System.getProperty(NAME_USERNAME, System.getenv(NAME_USERNAME));
     public static final String PASSWORD = System.getProperty(NAME_PASSWORD, System.getenv(NAME_PASSWORD));
     public static final String TOKEN_URI = System.getProperty(NAME_TOKEN_URI, System.getenv(NAME_TOKEN_URI));
+    public static final String CLIENT_ID = System.getProperty(NAME_CLIENT_ID, System.getenv(NAME_CLIENT_ID));
+
+    private RestTemplate restTemplate = new RestTemplate();
 
     public OrderSquidService() {
         ResourceOwnerPasswordResourceDetails resource = new ResourceOwnerPasswordResourceDetails();
+        resource.setClientId(CLIENT_ID);
+        resource.setClientSecret("acmesecret");
         resource.setUsername(USERNAME);
         resource.setPassword(PASSWORD);
         resource.setAccessTokenUri(TOKEN_URI);
@@ -38,7 +45,7 @@ public class OrderSquidService implements SquidService<CreateOrderRequest, Order
 
     @Override
     public Order execute(CreateOrderRequest createOrderRequest, long timeout, long deadline) throws InterruptedException {
-        Order order = oAuth2RestTemplate.postForObject(URL,
+        Order order = restTemplate.postForObject(URL,
                 createOrderRequest.getLineItems().stream()
                         .map(prd ->
                                 new demo.order.LineItem(prd.getProduct().getName(),
